@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+    	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+    	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<util:properties id="config" location="classpath:config.properties" />
+	<!-- 扫描非controller注解 -->
+	<context:component-scan base-package="com.quest.web.controllers" >
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+	<context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true"/>
+	
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+		<property name = "url" value = "${jdbc.url}" />    
+		<property name = "username" value = "${jdbc.username}" />    
+		<property name = "password" value = "${jdbc.password}" />    
+		<property name = "maxActive" value = "${jdbc.maxActive}" />  
+		<property name = "initialSize" value = "${jdbc.initialSize}" />  
+		<property name = "maxWait" value = "${jdbc.maxWait}" />  
+		<property name = "minIdle" value = "${jdbc.minIdle}" />    
+		<property name = "timeBetweenEvictionRunsMillis" value ="${jdbc.timeBetweenEvictionRunsMillis}" />  
+		<property name = "minEvictableIdleTimeMillis" value ="${jdbc.minEvictableIdleTimeMillis}" />    
+		<property name = "validationQuery" value = "${jdbc.validationQuery}" />    
+		<property name = "testWhileIdle" value = "${jdbc.testWhileIdle}" />    
+		<property name = "testOnBorrow" value = "${jdbc.testOnBorrow}" />    
+		<property name = "testOnReturn" value = "${jdbc.testOnReturn}" />    
+		<property name = "maxOpenPreparedStatements" value ="${jdbc.maxOpenPreparedStatements}" />  
+		<property name = "removeAbandoned" value = "${jdbc.removeAbandoned}" />  
+		<property name = "removeAbandonedTimeout" value ="${jdbc.removeAbandonedTimeout}" />  
+		<property name = "logAbandoned" value = "${jdbc.logAbandoned}" />  
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:mapper/*.xml</value>
+			</list>
+		</property>
+		<property name="typeAliasesPackage" value="com.quest.entity;com.quest.query" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.quest.dao" />
+	</bean>
+	
+	<bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="find*" propagation="SUPPORTS"  read-only="true" />
+			<tx:method name="query*"  propagation="SUPPORTS"  read-only="true" />
+			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config proxy-target-class="true">
+		<!-- 事务的切入点 -->
+		<aop:pointcut id="serviceOperation" expression="execution(* com.quest.*.service.*Service.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
+	</aop:config>
+	
+	<bean id="serviceFactory" class="com.quest.service.ServiceFactory" />
+	
+</beans>

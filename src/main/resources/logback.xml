@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="60 seconds">
+	
+	<substitutionProperty name="basepath" value="D:\\logs\\yoohoo"/>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder chartset="UTF-8">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${basepath}/yoohoo.log</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">  
+			<level>INFO</level>
+		</filter>
+		
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${basepath}/yoohoo.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		
+		<encoder chartset="UTF-8">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="QUEUE" class="ch.qos.logback.classic.AsyncAppender">  
+        <discardingThreshold>0</discardingThreshold>  
+          <queueSize>10000</queueSize>  
+          <appender-ref ref="FILE" /> 
+    </appender> 
+    
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="QUEUE"/>
+	</root>
+	
+</configuration>
