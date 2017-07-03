@@ -213,67 +213,24 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>1.0.18</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!--/ -->
 		<!-- freemaker -->
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>2.3.19</version>
+		<dependency> 
+			<groupId>org.freemarker</groupId> 
+			<artifactId>freemarker</artifactId> 
+			<version>2.3.23</version> 
 		</dependency>
-		<!-- base api -->
-		<dependency>
-			<groupId>com.zzh</groupId>
-			<artifactId>zzh-base-api</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<!-- file api -->
-		<dependency>
-			<groupId>com.zzh</groupId>
-			<artifactId>zzh-file-api</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.zzh</groupId>
-			<artifactId>zzh-user-api</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>dubbo</artifactId>
-            <version>2.5.3</version>
-            <exclusions>
-		      <exclusion>
-		        <groupId>org.springframework</groupId>
-		        <artifactId>spring</artifactId>
-		      </exclusion>
-		    </exclusions>
-        </dependency>
-        <dependency>
-			<groupId>javassist</groupId>
-			<artifactId>javassist</artifactId>
-			<version>3.12.1.GA</version>
-		</dependency>
-         <dependency>
-            <groupId>org.apache.zookeeper</groupId>
-			<artifactId>zookeeper</artifactId>
-			<version>3.4.6</version>
-        </dependency>
-  
-      <dependency>
-     	 <groupId>com.github.sgroschupf</groupId>
-		 <artifactId>zkclient</artifactId>
-		 <version>0.1</version>
-      </dependency>
-      <dependency>
-			<groupId>com.zzh</groupId>
-			<artifactId>zzh-tool-redis</artifactId>
-			<version>2.0.0-SNAPSHOT</version>
-	 </dependency>
 	</dependencies>
 
 	<build>
-		<finalName>zzh-base-service_${project.version}</finalName>
+		<finalName>yoohoo_${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

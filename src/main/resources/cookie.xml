@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd">
+	<bean id="cookieUtil" class="com.quest.web.cookies.CookieUtil"/>
+	
+	<bean name="cookieConfigurer" class="com.quest.web.cookies.CookieModuleConfigurer">
+		<property name="cryptoKey" value="^#16qweqv88cde729!@#$3450abfg^%" />
+		<property name="cookieConfigurerList">
+			<util:list>
+				<bean name="id" class="com.quest.web.cookies.CookieConfigurer">
+					<property name="domain" value=""/>
+					<property name="lifeTime" value="-1" />
+					<property name="name" value="id" />
+					<property name="clientName" value="__k__" />
+					<property name="encrypted" value="true" />
+				</bean>
+				<bean name="adminId" class="com.quest.web.cookies.CookieConfigurer">
+					<property name="domain" value=""/>
+					<property name="lifeTime" value="-1" />
+					<property name="name" value="adminId" />
+					<property name="clientName" value="__m__" />
+					<property name="encrypted" value="true" />
+				</bean>
+			</util:list>
+		</property>
+	</bean>	
+	
+</beans>

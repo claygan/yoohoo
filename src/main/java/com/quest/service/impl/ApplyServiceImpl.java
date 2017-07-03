@@ -11,7 +11,9 @@ import com.quest.entity.Apply;
 import com.quest.entity.ApplyQuery;
 import com.quest.entity.Pageble;
 import com.quest.exception.MobileExistException;
+import com.quest.exception.MobileFormatException;
 import com.quest.service.ApplyService;
+import com.quest.utils.ValidateUtils;
 
 @Service("applyService")
 public class ApplyServiceImpl implements ApplyService {
@@ -20,15 +22,26 @@ public class ApplyServiceImpl implements ApplyService {
 	private ApplyMapper applyMapper;
 	
 	@Override
-	public void apply(Apply apply) throws MobileExistException{
-		if(apply == null){
-			throw new MobileExistException("请求对象为null");
+	public void apply(Apply apply) throws MobileExistException,MobileFormatException{
+		try {
+			if(apply == null){
+				throw new MobileExistException("请求对象为null");
+			}
+			//验证手机号格式
+			if(ValidateUtils.isMobileNO(apply.getMobile())){
+				throw new MobileFormatException();
+			}
+			//验证手机号是否已经被注册
+			Apply requestApply = applyMapper.selectByMobile(apply.getMobile());
+			if(requestApply != null){
+				throw new MobileExistException();
+			}
+			applyMapper.insert(apply);
+		} catch (MobileExistException e) {
+			throw e;
+		} catch (MobileFormatException e) {
+			throw e;
 		}
-		Apply requestApply = applyMapper.selectByMobile(apply.getMobile());
-		if(requestApply != null){
-			throw new MobileExistException();
-		}
-		applyMapper.insert(apply);
 
 	}
 
