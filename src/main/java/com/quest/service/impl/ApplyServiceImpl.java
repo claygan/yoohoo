@@ -21,6 +21,10 @@ public class ApplyServiceImpl implements ApplyService {
 	@Resource
 	private ApplyMapper applyMapper;
 	
+	public void setApplyMapper(ApplyMapper applyMapper) {
+		this.applyMapper = applyMapper;
+	}
+
 	@Override
 	public void apply(Apply apply) throws MobileExistException,MobileFormatException{
 		try {
@@ -28,7 +32,7 @@ public class ApplyServiceImpl implements ApplyService {
 				throw new MobileExistException("请求对象为null");
 			}
 			//验证手机号格式
-			if(ValidateUtils.isMobileNO(apply.getMobile())){
+			if(!ValidateUtils.isMobileNO(apply.getMobile())){
 				throw new MobileFormatException();
 			}
 			//验证手机号是否已经被注册

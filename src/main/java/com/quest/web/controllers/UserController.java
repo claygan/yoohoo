@@ -32,6 +32,7 @@ public class UserController {
 			User resultUser = userService.adminLogin(user);
 			//管理员成功登录，存入cookie
 			CookieUtil.writeCookieForAdmin(request, ""+resultUser.getId());
+			result.setMsg("登录成功");
 			result.setError(GlobalDefine.resultCode.SUCCESS);
 		} catch (UserNotExistException e) {
 			result.setError(GlobalDefine.resultCode.LOGIN_ERROR);
@@ -53,10 +54,14 @@ public class UserController {
 		return result;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@RequestMapping("logout")
-	public String logout(HttpServletRequest request, HttpServletResponse response){
+	@ResponseBody
+	public ApiResult logout(HttpServletRequest request, HttpServletResponse response){
+		ApiResult result = new ApiResult(); 
 		CookieUtil.clearCookie(request);
-		return "/index.html";
+		result.setMsg("登出成功！");
+		return result;
 	}
 	
 }

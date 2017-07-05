@@ -17,6 +17,11 @@ public class UserSeviceImpl implements UserService {
 
 	@Resource
 	private UserMapper userMapper;
+	
+	public void setUserMapper(UserMapper userMapper) {
+		this.userMapper = userMapper;
+	}
+
 	@Override
 	public User login(User user) throws UserNotExistException, PasswordWrongException {
 		try {
@@ -56,7 +61,7 @@ public class UserSeviceImpl implements UserService {
 				throw new UserNotExistException();
 			}
 			//检查是否是管理员用户
-			if("1".equals(resultUser.getIsAdmin())){
+			if(!"1".equals(resultUser.getIsAdmin())){
 				throw new NotAdminException();
 			}
 			//验证用户输入密码是否正确

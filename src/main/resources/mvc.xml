@@ -70,6 +70,15 @@
 	
 	<mvc:default-servlet-handler /> 
 
+	<!-- 拦截器配置 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/resources/**"/>
+			<bean class="com.quest.web.interceptors.CommonInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	<bean id="contentNegotiationManager"
 		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 		<property name="favorPathExtension" value="true" />

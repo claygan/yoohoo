@@ -16,7 +16,6 @@ import com.quest.exception.MobileFormatException;
 import com.quest.service.ApplyService;
 import com.quest.web.common.ApiResult;
 import com.quest.web.common.GlobalDefine;
-import com.quest.web.cookies.CookieUtil;
 
 @Controller
 @RequestMapping("apply")
@@ -33,6 +32,7 @@ public class ApplyController {
 		try {
 			applyService.apply(apply);
 			result.setError(GlobalDefine.resultCode.SUCCESS);
+			result.setMsg("提交成功");
 		} catch (MobileExistException e) {
 			result.setError(GlobalDefine.resultCode.INTERNAL_ERROR);
 			result.setMsg(e.getMessage());
@@ -48,15 +48,6 @@ public class ApplyController {
 		}
 		
 		return result;
-	}
-	
-	@RequestMapping("list")
-	public String toApplyList(HttpServletRequest request, HttpServletResponse response){
-		if(CookieUtil.isAdminLogin(request)){
-			return request.getRequestURI();
-		}else{
-			return "/views/list";
-		}
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

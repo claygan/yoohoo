@@ -30,7 +30,6 @@ public class CookieUtil {
 	public static void writeCookie(HttpServletRequest request, String key, String value, int expire) {
 
 		Assert.notNull(request, "write cookie error. http request cannot be null!");
-
 		CookieModule jar = (CookieModule) request.getAttribute(CookieModule.COOKIE);
 		if (jar == null) {
 			throw new NullPointerException();

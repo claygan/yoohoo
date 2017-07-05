@@ -73,12 +73,20 @@
 	
 	<bean id="serviceFactory" class="com.quest.service.ServiceFactory" />
 	
-	<bean id="applyService" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.quest.service.ApplyService"></property>
+	<bean id="applyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.quest.dao.ApplyMapper"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
-	<bean id="userService" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.quest.service.UserService"></property>
+	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.quest.dao.UserMapper"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
+    
+	<bean id="applyService" class="com.quest.service.impl.ApplyServiceImpl">
+		<property name="applyMapper" ref="applyMapper"></property>
+	</bean>
+	<bean id="userService" class="com.quest.service.impl.UserSeviceImpl">
+		<property name="userMapper" ref="userMapper"></property>
+	</bean>
+	
 </beans>
