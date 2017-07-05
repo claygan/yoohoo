@@ -9,7 +9,7 @@ public class Apply {
 
     private String mobile;
 
-    private Integer contacted;
+    private Integer contacted = 0;
 
     public Long getId() {
         return id;
