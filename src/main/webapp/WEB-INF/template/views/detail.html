@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/resources/styles/reset.css">
+    <link rel="stylesheet" href="/resources/styles/common.css">
+    <link rel="stylesheet" href="/resources/styles/detail.css">
+    <title>轻松学英语</title>
+    <style>
+        body{
+            padding-top: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="detail-center-btn-box">
+    <img src="/resources/asserts/detail-top.png" alt="">
+    <p class="detail-center-btn"><a class="submit" href="javascript:void(0)">免费申请试听</a></p>
+</div>
+<div class="banner-detail">
+    <nav class="detail-item">
+        <ul class="clearfix" style="width: 1138px;margin: 0 auto">
+            <li class="fl"><img src="/resources/asserts/detail-1.png" alt=""></li>
+            <li class="fl"><img src="/resources/asserts/detail-2.png" alt=""></li>
+            <li class="fl"><img src="/resources/asserts/detail-3.png" alt=""></li>
+            <li class="fl"><img src="/resources/asserts/detail-4.png" alt=""></li>
+        </ul>
+    </nav>
+    <div class="wrap detail-middle"><img src="/resources/asserts/detail-middle.png" alt=""></div>
+</div>
+<div class="detail-bottom-img"><img src="/resources/asserts/detail-bottom.png" alt=""></div>
+<div class="detail-bottom">
+    <h6>免费试听</h6>
+    <nav>
+        <ul>
+            <input id="name" type="text" placeholder="孩子的名字" name="name">
+            <li>
+                <select name="years" id="years">
+                    <option value="3" selected>3岁</option>
+                    <option value="4">4岁</option>
+                    <option value="5">5岁</option>
+                    <option value="6">6岁</option>
+                    <option value="7">7岁</option>
+                    <option value="8">8岁</option>
+                    <option value="9">9岁</option>
+                    <option value="10">10岁</option>
+                    <option value="11">11岁</option>
+                    <option value="12">12岁</option>
+                    <option value="13">13岁</option>
+                    <option value="14">14岁</option>
+                    <option value="15">15岁</option>
+                    <option value="16">16岁</option>
+                </select>
+            </li>
+            <input id="mobile" type="text" placeholder="家长的手机号（11位）" name="mobile">
+        </ul>
+    </nav>
+    <a class="submit submit-btn" href="javascript:;">立即申请</a>
+</div>
+<script src="/resources/scripts/jquery.min.js"></script>
+<script src="/resources/scripts/layer/layer.js"></script>
+<script src="/resources/scripts/app.js"></script>
+<script>
+    var dialog;
+//    $("body").on("click",".submit",function (e) {
+//            dialog = layer.open({
+//            type: 1,
+//            title: false,
+//            content : $(".dialog"),
+//            area: ['auto', 'auto'],
+//            success : function () {
+//                $("body").on("click",".close",function () {
+//                    layer.close(dialog);
+//                })
+//            }
+//        })
+//    })
+    //点击申请课程
+    //点击申请课程
+    $(".submit-btn").on("click",function () {
+        var name = $("#name").val(),mobile = $("#mobile").val(),year = $("#years-dialog").val();
+        if(name === ""){
+            layer.tips('请输入正确的孩子名字', '#name');
+            return;
+        };
+        if(mobile === ""){
+            layer.tips('手机号不允许为空', '#mobile');
+            return;
+        }else if(!(/^1[34578]\d{9}$/.test(mobile))){
+            layer.tips('请输入正确的手机号', '#mobile');
+            return;
+        }
+        console.log($("#years-dialog").val());
+        var data = {
+            name : $("#name").val(),
+            age : $("#years").val(),
+            mobile : $("#mobile").val(),
+        };
+        $.ajax({
+            type : "POST",
+            url : "/apply/submit",
+            data : data,
+            ContentType : 'application/json',
+            dataType : "json",
+            success : function (res) {
+                if(res.error === 1){
+                    layer.msg(res.msg);
+                    return;
+                }else if(res.error === 0){
+                    layer.close(dialog);
+                    layer.msg("您的申请，已经提交成功。我们的课程顾问会在3个工作日内与您联系，您也可以直接电话联系我们！")
+                }else{
+                    layer.msg("服务器出现异常，请联系工作人员");
+                }
+            }
+        })
+    })
+    //按钮随着屏幕自适应
+    var percent = ($(window).width() / 1920);
+    $(".detail-center-btn-box .submit").css({
+        top :　percent *　490 + "px",
+        width :　percent *　360,
+        height :　percent *　60,
+        'font-size' : percent * 26,
+        'line-height' : (percent *　60) + 'px',
+    }).on("click",function () {
+        $("body").animate({
+            scrollTop : document.body.scrollHeight
+        })
+    })
+    //
+    $(".detail-center-btn").css({
+        top :　percent *　400 + "px",
+    });
+    //头部的按钮根据窗口宽度自适应图片
+    $(window).resize(function () {
+        var percent = ($(window).width() / 1920);
+        $(".detail-center-btn-box .submit").css({
+            width :　percent *　360,
+            height :　percent *　60,
+            'font-size' : percent * 26,
+            'line-height' : (percent *　60) + 'px',
+        });
+        $(".detail-center-btn").css({
+            top :　percent *　400 + "px",
+        });
+    });
+</script>
+</body>
+</html>

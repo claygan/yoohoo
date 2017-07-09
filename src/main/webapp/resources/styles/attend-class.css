@@ -1,0 +1,49 @@
+@charset "UTF-8";
+/*图片根路径*/
+/*常用颜色*/
+/*主题色*/
+/*主题背景色*/
+/*表格灰框颜色*/
+/*格子灰框hover颜色*/
+/*标题栏背景灰色*/
+.attend-class-content-title {
+  background-color: #f6f6f6; }
+  .attend-class-content-title h2 {
+    line-height: 140px;
+    text-align: center;
+    font-size: 36px;
+    color: #2c2c2c; }
+  .attend-class-content-title ul {
+    display: flex;
+    justify-content: space-around; }
+  .attend-class-content-title li a {
+    font-size: 24px;
+    color: #2c2c2c; }
+  .attend-class-content-title li.active a {
+    padding-bottom: 8px;
+    color: #62c456;
+    border-bottom: 2px solid #62c456; }
+
+.attend-step-title img {
+  margin: 60px 0 25px;
+  width: 138px;
+  height: 60px; }
+.attend-step-title span {
+  font-size: 36px;
+  color: #000; }
+.attend-step-title p {
+  font-size: 14px;
+  color: #999; }
+
+.software-download {
+  margin-top: 70px; }
+  .software-download ul {
+    margin-top: 90px;
+    margin-bottom: 120px;
+    display: flex;
+    justify-content: space-around; }
+  .software-download img {
+    width: 160px;
+    height: 160px; }
+
+/*# sourceMappingURL=attend-class.css.map */

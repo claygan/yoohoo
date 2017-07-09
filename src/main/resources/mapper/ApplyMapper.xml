@@ -37,7 +37,7 @@
 	</select>
 	<select id="getQueryApplyCount" resultType="java.lang.Integer" parameterType="com.quest.entity.ApplyQuery" >
 		select 
-		<include refid="Base_Column_List" />
+			count(id)
 		from audition_apply
 		<include refid="condition"/>
 	</select>

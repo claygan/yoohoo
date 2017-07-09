@@ -1,0 +1,36 @@
+@charset "utf-8";
+/*图片根路径*/
+$gImgBase : "../asserts/";
+
+/*常用颜色*/
+//$themeColor : #00aac3;/*主题色*/
+$themeColor : #36bd82;/*主题色*/
+$themeBgColor : #62c456;/*主题背景色*/
+$borderColor : #bfcbd9;/*表格灰框颜色*/
+$hoverBorderColor : #8391a5;/*格子灰框hover颜色*/
+$titleBgColor : #f0f0f0;/*标题栏背景灰色*/
+$orange : #ee8f00;//橘色
+$blackFontColor : #333;
+@mixin scale($n) {
+  -webkit-transform: scale($n);
+  -ms-transform: scale($n);
+  transform: scale($n);
+}
+
+@mixin transform-origin($x,$y) {
+  -webkit-transform-origin: $x $y;
+  -ms-transform-origin: $x $y;
+  transform-origin: $x $y;
+}
+
+@mixin transition($prop,$time) {
+  -webkit-transition: $prop $time;
+  -ms-transition: $prop $time;
+  transition: $prop $time;
+}
+
+@mixin rotate($deg) {
+  -webkit-transform: rotate($deg);
+  -ms-transform: rotate($deg);
+  transform: rotate($deg);
+}

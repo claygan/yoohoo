@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台查询</title>
+	<link rel="stylesheet" href="/resources/styles/reset.css">
+	<link rel="stylesheet" href="/resources/styles/table.css">
+</head>
+<body>
+<div id="app">
+	<div class="header">
+		<div class="wrap title clearfix tr">
+			<a class="default-btn" id="jLoginOut" href="javascript:;" @click="loginOut">退出</a>
+		</div>
+	</div>
+	<div class="serach-box">
+		<div class="search-title">
+			<form action="">
+				<span>姓名 ： <input id="name" type="text" name="username" placeholder="姓名"></span>
+				<span style="margin-left: 20px;">手机号码 ： <input id="mobile" type="text" name="mobile" placeholder="手机号码"></span>
+				<span style="margin-left: 20px;">是否联系过 :
+				<select name="hasConcat" id="hasConcat">
+					<option value="0">否</option>
+					<option value="1">是</option>
+				</select>
+			</span>
+				<a class="default-btn fr jSearch" href="javascript:void(0);" @click="getData">查看</a>
+			</form>
+		</div>
+		<div class="search-content">
+			<table>
+				<thead>
+				<tr>
+					<th>序号</th>
+					<th>姓名</th>
+					<th>手机号</th>
+					<th>年龄</th>
+					<th>是否联系过</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr v-for="(data, index) in tableList">
+					<td>{{index+1}}</td>
+					<td>{{data.name}}</td>
+					<td>{{data.mobile}}</td>
+					<td>{{data.age}}</td>
+					<td>
+						<select v-model="data.contacted" @change="changeState(data)">
+							<option value="0">否</option>
+							<option value="1">是</option>
+						</select>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<div class="mt-20 mb-30 fr pagenation" show="records.length">
+				<nav>
+					<ul class="clearfix pagination">
+						<li class="prev-page">
+							<a href="javascript:void(0);" @click="previous()">
+							</a>
+						</li>
+						<li v-for="page in pageList" :class="{active: isActivePage(page)}">
+							<a href="javascript:void(0);" @click="selectPage(page)">{{ page }}</a>
+						</li>
+						<li class="next-page">
+							<a href="javascript:void(0);" @click="next()">
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<span>共 {{pageLength}} 页</span>&nbsp;&nbsp;&nbsp;
+				每页
+				<select  class="page-size" v-model="pageSize" @change="changePage(pageSize)">
+					<option value="10">10</option>
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="40">40</option>
+				</select>条
+				&nbsp;&nbsp;&nbsp;第 <input class="ml-5 mr-5 tc go-page-box" type="text" :value="selPage"
+										   onkeyup="this.value=this.value.replace(/\D/g,'')"/>页
+				&nbsp;&nbsp;&nbsp;<span class="go-page" @click="goAssignPage()">GO</span>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/resources/scripts/jquery.min.js"></script>
+<script src="/resources/scripts/vue.js"></script>
+<script src="/resources/scripts/axios.js"></script>
+<script src="/resources/scripts/layer/layer.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            tableList: [],
+            pageSize: 10,//每页条数,默认十条
+            records: 0,//数据条数
+            selPage: 1,//跳转到第几页，默认第一页
+            pageLength: 10,//有几页
+            pageList: [],
+        },
+        mounted (){
+            this.selectPage(this.selPage);
+        },
+        methods: {
+            //请求整个table列表数据
+            getData: function () {
+                var _this = this;
+                var data = {
+                    page: this.selPage,
+                    pageSize: this.pageSize,
+                    name: $("#name").val(),
+                    mobile: $("#mobile").val(),
+                    contacted: $("#hasConcat").val()
+                };
+                $.ajax({
+                    type : "POST",
+                    url : "/apply/queryApply",
+                    async:false,
+                    data : data,
+                    dataType : "json",
+                    success : function (res) {
+                        _this.tableList = res.data.rows;
+                        _this.records = res.data.records;
+                        _this.pageSize = res.data.pageSize;
+                        _this.pageLength = res.data.total;
+                        let newpageList = [];
+                        let page = 1;
+                        for (let i = (page - 1); i < ((page + 4) > _this.pageLength ? _this.pageLength : (page + 4)); i++) {
+                            newpageList.push(i + 1);
+                        }
+                        _this.pageList = newpageList;
+                    }
+                })
+            },
+            loginOut: function () {
+            	$.ajax({
+                    type : "POST",
+                    url : "/user/logout",
+                    dataType : "json",
+                    success : function (res) {
+                    	if (res.error === 0) {
+                            //登出成功，返回登录页面
+                            layer.msg(res.msg);
+                            location.href = "/login";
+                        }
+                    }
+            	});
+            },
+            //改变联系人的状态
+            changeState: function (data) {
+            	$.ajax({
+                    type : "POST",
+                    url : "/apply/updateContactStatus",
+                    data : {
+                    	id:data.id,
+                    	status: data.contacted
+                    },
+                    dataType : "json",
+                    success : function (res) {
+                    	if (res.error === 0) {
+                            //修改成功
+                            layer.msg(res.msg);
+                            window.location.reload();
+                        } else {
+                            layer.msg('修改失败，请检查服务器');
+                        }
+                    }
+            	});
+            },
+            //前往指定页面
+            goAssignPage: function () {
+                this.selPage = parseInt($(".go-page-box").val());
+                this.selectPage(this.selPage);
+            },
+            //改变每页显示条数时刷新数据
+            changePage: function (value) {
+                console.log(value);
+                //每页条数
+                this.pageSize = value;
+                //设置显示跳转到第一页
+                this.selPage = 1;
+//                获得表格数据
+//                this.getData()
+            },
+            //跳转页面
+            selectPage: function (page) {
+                //不能小于1大于最大
+                if (page < 1 || page > this.pageLength) {
+                    alert("页码不正确");
+                    return
+                }
+                //最多显示分页数5
+                if (page > 2) {
+                    //因为只显示5个页数，大于2页开始分页转换
+                    let newpageList = [];
+                    for (let i = (page - 3); i < ((page + 2) > this.pageLength ? this.pageLength : (page + 2)); i++) {
+                        newpageList.push(i + 1);
+                    }
+                    this.pageList = newpageList;
+                }
+                //获得当前页
+                this.selPage = page;
+                this.isActivePage(page);
+                this.getData();
+            },
+            //设置当前选中页样式
+            isActivePage: function (page) {
+                return this.selPage === page;
+            },
+            //上一页
+            previous: function () {
+                if (this.selPage - 1 < 1) {
+                    return;
+                }
+                this.selectPage(this.selPage - 1);
+            },
+            //下一页
+            next: function () {
+                if (this.selPage + 1 > this.pageLength) {
+                    return;
+                }
+                this.selectPage(this.selPage + 1);
+            },
+        }
+    })
+</script>
+</body>
+</html>

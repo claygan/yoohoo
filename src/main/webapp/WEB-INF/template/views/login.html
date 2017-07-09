@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登录</title>
+	<link rel="stylesheet" href="/resources/styles/reset.css">
+	<link rel="stylesheet" href="/resources/styles/login.css">
+</head>
+<body>
+<div class="bg_content">
+	<canvas id="canvas"></canvas>
+</div>
+<div class="login-box">
+	<div class="login-title">
+		<a href="javascript:;">welcome</a>
+	</div>
+	<form>
+		<nav>
+			<ul>
+				<li><input id="username" type="text" name="username" placeholder="用户名"></li>
+				<li><input id="password" type="password" name="password" placeholder="密码"></li>
+			</ul>
+		</nav>
+	</form>
+	<div class="submit-box">
+		<a id="loginBtn" href="javascript:;" class="submit-btn">登录</a>
+	</div>
+</div>
+<script>
+    var _createClass=function(){function defineProperties(a,b){for(var i=0;i<b.length;i++){var c=b[i];c.enumerable=c.enumerable||false;c.configurable=true;if("value"in c)c.writable=true;Object.defineProperty(a,c.key,c)}}return function(a,b,c){if(b)defineProperties(a.prototype,b);if(c)defineProperties(a,c);return a}}();function _possibleConstructorReturn(a,b){if(!a){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return b&&(typeof b==="object"||typeof b==="function")?b:a}function _inherits(a,b){if(typeof b!=="function"&&b!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof b);}a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:false,writable:true,configurable:true}});if(b)Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b}function _classCallCheck(a,b){if(!(a instanceof b)){throw new TypeError("Cannot call a class as a function");}}var Circle=function(){function Circle(x,y){_classCallCheck(this,Circle);this.x=x;this.y=y;this.r=Math.random()*10;this._mx=Math.random();this._my=Math.random()}_createClass(Circle,[{key:'drawCircle',value:function drawCircle(a){a.beginPath();a.arc(this.x,this.y,this.r,0,360);a.closePath();a.fillStyle='rgba(255, 255, 255, 0.6)';a.fill()}},{key:'drawLine',value:function drawLine(a,b){var c=this.x-b.x;var e=this.y-b.y;var d=Math.sqrt(c*c+e*e);if(d<150){a.beginPath();a.moveTo(this.x,this.y);a.lineTo(b.x,b.y);a.closePath();a.strokeStyle='rgba(255, 255, 255, 0.6)';a.stroke()}}},{key:'move',value:function move(w,h){this._mx=this.x<w&&this.x>0?this._mx:-this._mx;this._my=this.y<h&&this.y>0?this._my:-this._my;this.x+=this._mx/2;this.y+=this._my/2}}]);return Circle}();var currentCirle=function(b){_inherits(currentCirle,b);function currentCirle(x,y){_classCallCheck(this,currentCirle);return _possibleConstructorReturn(this,(currentCirle.__proto__||Object.getPrototypeOf(currentCirle)).call(this,x,y))}_createClass(currentCirle,[{key:'drawCircle',value:function drawCircle(a){a.beginPath();this.r=8;a.arc(this.x,this.y,this.r,0,360);a.closePath();a.fillStyle='rgba(255, 77, 54, 0.6)';a.fill()}}]);return currentCirle}(Circle);window.requestAnimationFrame=window.requestAnimationFrame||window.mozRequestAnimationFrame||window.webkitRequestAnimationFrame||window.msRequestAnimationFrame;var canvas=document.getElementById('canvas');var ctx=canvas.getContext('2d');var w=canvas.width=canvas.offsetWidth;var h=canvas.height=canvas.offsetHeight;var circles=[];var current_circle=new currentCirle(0,0);var draw=function draw(){ctx.clearRect(0,0,w,h);for(var i=0;i<circles.length;i++){circles[i].move(w,h);circles[i].drawCircle(ctx);for(let j=i+1;j<circles.length;j++){circles[i].drawLine(ctx,circles[j])}}if(current_circle.x){current_circle.drawCircle(ctx);for(var k=1;k<circles.length;k++){current_circle.drawLine(ctx,circles[k])}}requestAnimationFrame(draw)};var init=function init(a){for(var i=0;i<a;i++){circles.push(new Circle(Math.random()*w,Math.random()*h))}draw()};window.addEventListener('load',init(60));window.onmousemove=function(e){e=e||window.event;current_circle.x=e.clientX;current_circle.y=e.clientY};window.onmouseout=function(){current_circle.x=null;current_circle.y=null};
+</script>
+<script></script>
+<script src="/resources/scripts/jquery.min.js"></script>
+<script src="/resources/scripts/app.js"></script>
+<script src="/resources/scripts/axios.js"></script>
+<script src="/resources/scripts/layer/layer.js"></script>
+<script>
+	//点击登录按钮
+	$("#loginBtn").on("click",function () {
+        var data = {
+            username : $("#username").val(),
+            password : $("#password").val(),
+        };
+        $.ajax({
+            type: "POST",
+            url: "/user/login",
+            data: data,
+            dataType: "json",
+            success: function(res){
+               if(res.error === 0){
+					location.href = "/apply/searchTable"
+				}else{
+					layer.msg(res.msg);
+				}
+            }
+        });
+    })
+</script>
+</body>
+</html>

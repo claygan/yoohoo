@@ -1,0 +1,56 @@
+@import 'resetStyle.scss';
+.attend-class-content-title{
+  background-color: #f6f6f6;
+  h2{
+    line-height: 140px;
+    text-align: center;
+    font-size: 36px;
+    color: #2c2c2c;
+  }
+  ul{
+    display: flex;
+    justify-content: space-around;
+  }
+  li{
+    a{
+      font-size: 24px;
+      color: #2c2c2c;
+    }
+    &.active a{
+      padding-bottom: 8px;
+      color: $themeBgColor;
+      border-bottom: 2px solid $themeBgColor;
+    }
+  }
+}
+.attend-step-title{
+  img{
+    margin: 60px 0 25px;
+    width: 138px;
+    height: 60px;
+  }
+  span{
+    font-size: 36px;
+    color: #000;
+  }
+  p{
+    font-size: 14px;
+    color: #999;
+  }
+}
+.attend-step-one{
+
+}
+.software-download{
+  margin-top: 70px;
+  ul{
+    margin-top: 90px;
+    margin-bottom: 120px;
+    display: flex;
+    justify-content: space-around;
+  }
+  img{
+    width: 160px;
+    height: 160px;
+  }
+}

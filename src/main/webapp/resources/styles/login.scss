@@ -1,0 +1,84 @@
+@import 'resetStyle.scss';
+
+.login-box{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  //width: 500px;
+  //height: 250px;
+  text-align: center;
+  transform: translateX(-50%) translateY(-50%);
+  padding: 27px 45px 40px;
+  .login-title{
+    text-align: center;
+    a{
+      margin-bottom: 10px;
+      height: 36px;
+      line-height: 36px;
+      font-size: 34px;
+      font-weight: normal;
+      color: #fff;
+    }
+  }
+  nav{
+    width: 298px;
+    padding: 1px 0;
+    border-radius: 3px;
+    li{
+      margin-top: 10px;
+    }
+  }
+  input{
+    box-sizing: border-box;
+    padding: 1em .8em;
+    width: 100%;
+    height: 40px;
+    line-height: 19px;
+    color: #555;
+    border: 1px solid rgba(255,255,255,.6);
+    border-radius: 4px;
+    background-color: rgba(255,255,255,.3);
+  }
+  .submit-box{
+    margin-top: 18px;
+  }
+  .submit-btn{
+    display: block;
+    width: 100%;
+    font-size: 15px;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(0,0,0,.2);
+    color: #fff;
+    line-height: 41px;
+    box-shadow: none;
+    border: 0;
+    border-radius: 3px;
+    background: $themeBgColor;
+  }
+}
+input::-webkit-input-placeholder { /* WebKit browsers */
+  color: #fff;
+}
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #fff;
+}
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #fff;
+}
+input:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: #fff;
+}
+/*设置背景*/
+ .bg_content {
+   position: fixed;
+   top: 0;
+   z-index: -1;
+   width: 100%;
+   height: 100%;
+   background: rgba(98,196,86,.5);
+ }
+
+#canvas {
+  width: 100%;
+  height: 100%;
+}

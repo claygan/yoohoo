@@ -68,4 +68,12 @@ public class ApplyServiceImpl implements ApplyService {
 		return pageble;
 	}
 
+	@Override
+	public void updateContactStatus(long applyId, int contactStatus) {
+		Apply record = new Apply();
+		record.setId(applyId);
+		record.setContacted(contactStatus);
+		applyMapper.updateByPrimaryKeySelective(record);
+	}
+
 }

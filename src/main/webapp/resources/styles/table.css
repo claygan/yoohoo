@@ -1,0 +1,138 @@
+@charset "UTF-8";
+/*图片根路径*/
+/*常用颜色*/
+/*主题色*/
+/*主题背景色*/
+/*表格灰框颜色*/
+/*格子灰框hover颜色*/
+/*标题栏背景灰色*/
+.header {
+  height: 60px;
+  line-height: 60px;
+  background-color: #ccc; }
+
+.wrap {
+  width: 1100px;
+  margin: 0 auto; }
+
+.serach-box {
+  position: absolute;
+  top: calc(50% + 30px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 1100px;
+  height: calc(100% - 100px);
+  border: 1px solid #ddd; }
+  .serach-box .search-title {
+    padding: 10px 50px;
+    border-bottom: 1px solid #ddd; }
+  .serach-box input {
+    padding: 4px 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #55595c;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px; }
+  .serach-box select {
+    width: 60px;
+    padding: 4px 4px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #55595c;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px; }
+
+.search-content {
+  padding: 20px 50px; }
+
+.default-btn {
+  min-width: 60px;
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #fff;
+  background-color: #62c456;
+  border-radius: 4px; }
+
+table {
+  width: 100%; }
+  table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9; }
+  table td, table th {
+    height: 30px;
+    text-align: center;
+    border: 1px solid #ddd; }
+
+input::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #ccc; }
+
+input:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #ccc; }
+
+input::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #ccc; }
+
+input:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #ccc; }
+
+/*分页插件*/
+.pagenation nav {
+  display: inline-block;
+  vertical-align: middle; }
+.pagenation li {
+  position: relative;
+  margin-left: 10px;
+  float: left;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center; }
+  .pagenation li a {
+    display: block; }
+  .pagenation li:hover a, .pagenation li.active a {
+    width: 24px;
+    height: 24px;
+    color: #fff;
+    background-color: #62c456;
+    cursor: pointer; }
+  .pagenation li.prev-page:hover a, .pagenation li.next-page:hover a {
+    background-color: #fff; }
+  .pagenation li.prev-page a:after, .pagenation li.next-page a:after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    width: 10px;
+    height: 10px;
+    border-left: 1px solid #b6b6b6;
+    border-bottom: 1px solid #b6b6b6;
+    transform: rotate(45deg); }
+  .pagenation li.next-page a:after {
+    left: 0;
+    transform: rotate(-135deg); }
+.pagenation .page-size {
+  width: 50px;
+  border: 1px solid #ccc; }
+.pagenation .go-page-box {
+  padding: 0 5px;
+  width: 32px;
+  height: 22px;
+  color: #333;
+  border: 1px solid #ccc; }
+.pagenation .go-page {
+  width: 42px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer; }
+
+/*# sourceMappingURL=table.css.map */

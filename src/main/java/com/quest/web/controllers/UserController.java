@@ -29,6 +29,9 @@ public class UserController {
 	public ApiResult login(HttpServletRequest request,HttpServletResponse response, User user){
 		ApiResult result = new ApiResult(); 
 		try {
+			if(user == null || user.getUsername().isEmpty() || user.getPassword().isEmpty()){
+				throw new UserNotExistException("参数错误");
+			}
 			User resultUser = userService.adminLogin(user);
 			//管理员成功登录，存入cookie
 			CookieUtil.writeCookieForAdmin(request, ""+resultUser.getId());
