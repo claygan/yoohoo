@@ -2,6 +2,13 @@ package com.quest.web.common;
 
 public class GlobalDefine {
 	
+	public static class session{
+		/**
+		 * 用户信息键值
+		 */
+		public static final String USER_SESSION = "USER_SESSION";
+	}
+	
 	/** 
 	 * @ClassName: resultCode
 	 * @Description:返回状态码规范

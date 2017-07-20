@@ -17,6 +17,7 @@ import com.quest.exception.MobileFormatException;
 import com.quest.service.ApplyService;
 import com.quest.web.common.ApiResult;
 import com.quest.web.common.GlobalDefine;
+import com.quest.web.common.SessionUtils;
 import com.quest.web.cookies.CookieUtil;
 
 @Controller
@@ -28,7 +29,7 @@ public class ApplyController {
 	
 	@RequestMapping("searchTable")
 	public String toApplyListPage(HttpServletRequest request, HttpServletResponse response){
-		if(CookieUtil.isAdminLogin(request)){
+		if(SessionUtils.isAdminLogin(request)){
 			return "/views/searchTable";
 		}else{
 			return "redirect:/login";

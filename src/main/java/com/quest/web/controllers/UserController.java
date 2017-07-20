@@ -15,7 +15,7 @@ import com.quest.exception.UserNotExistException;
 import com.quest.service.UserService;
 import com.quest.web.common.ApiResult;
 import com.quest.web.common.GlobalDefine;
-import com.quest.web.cookies.CookieUtil;
+import com.quest.web.common.SessionUtils;
 
 @Controller
 @RequestMapping("user")
@@ -33,8 +33,11 @@ public class UserController {
 				throw new UserNotExistException("参数错误");
 			}
 			User resultUser = userService.adminLogin(user);
-			//管理员成功登录，存入cookie
-			CookieUtil.writeCookieForAdmin(request, ""+resultUser.getId());
+			//管理员成功登录，存入session
+			if(resultUser == null){
+				throw new Exception("用户登录失败！");
+			}
+			SessionUtils.writeSessionForAdmin(request, ""+resultUser.getId());
 			result.setMsg("登录成功");
 			result.setError(GlobalDefine.resultCode.SUCCESS);
 		} catch (UserNotExistException e) {
@@ -62,7 +65,7 @@ public class UserController {
 	@ResponseBody
 	public ApiResult logout(HttpServletRequest request, HttpServletResponse response){
 		ApiResult result = new ApiResult(); 
-		CookieUtil.clearCookie(request);
+		SessionUtils.clearSessionForAdmin(request);
 		result.setMsg("登出成功！");
 		return result;
 	}
